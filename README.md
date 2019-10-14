@@ -2,7 +2,7 @@
 
 ## Part 1
 
-This is a timeboxed exercise (30 mins) to conduct Manual Testing for (url_hidden). Have performed tests in the following areas:
+This is a timeboxed exercise (30 mins) to conduct Manual Testing for EE's hotel booking system. Have performed tests in the following areas:
 
 - Functional
 - Cross Browsers (desktop and mobile)
@@ -37,4 +37,3 @@ Given that this was a timeboxed exercise I was not able to conduct further testi
 
 ## Part 2
 
-tbc
