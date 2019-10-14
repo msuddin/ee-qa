@@ -37,3 +37,20 @@ Given that this was a timeboxed exercise I was not able to conduct further testi
 
 ## Part 2
 
+To run the tests, from the root directory of this project run:
+
+```
+./gradlew clean test
+```
+
+- Tests written in Cucumber BDD - I have re-used some steps from the booking.feature file in deleting.feature file
+- Code should detect which is your native OS in which case it will try to run the correct chromedriver (windows vs mac)
+- Have abstracted out WebDriver and used Singleton Pattern to ensure the driver can not be instantiated more than once
+- Have used the Page Object Pattern to isolate all page related methods
+- Have added tags to the RunAllTests class
+
+### If I have more time
+
+- My focus here was to get a working solution up and running as opposed to focusing on any libraries which would help overtime e.g. Spring
+- I would have added in configuration to run all the tests in headless mode
+- I would have written a dockerfile that would help running the tests (may not need to worry too much about the underlying os)

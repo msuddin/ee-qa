@@ -1,6 +1,7 @@
 package ee.steps;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import ee.page.BasePage;
@@ -14,6 +15,12 @@ public class StepDefinition {
 
     private BasePage bookingPage = new BasePage();
     private List<String> dataFields;
+    private int latestRecordId;
+
+    @Given("^I am able to navigate to the site$")
+    public void ableToNavigateToSite() {
+        bookingPage.bookingTableIsVisible();
+    }
 
     @When("^I am on the booking form and enter data$")
     public void enterDataIntoBookingForm(DataTable formData) {
@@ -34,5 +41,20 @@ public class StepDefinition {
     @Then("^I should see the booking$")
     public void shouldSeeBooking() {
         assertThat(bookingPage.searchRecords(dataFields), is(true));
+    }
+
+    @Given("^I save it's record ID$")
+    public void saveRecordId() {
+        latestRecordId = bookingPage.getLatestRecordId();
+    }
+
+    @When("^I delete the booking using it's record ID$")
+    public void DeleteBookingUsingRecordId() {
+        bookingPage.deleteBookingBasedOnId(latestRecordId);
+    }
+
+    @Then("^it should not be visible anymore$")
+    public void bookingShouldNotBeVisible() {
+        assertThat(bookingPage.searchRecords(dataFields), is(false));
     }
 }

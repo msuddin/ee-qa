@@ -4,7 +4,9 @@ import ee.driver.WebDriverConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +78,22 @@ public class BasePage {
             }
         }
         return false;
+    }
+
+    public void bookingTableIsVisible() {
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("bookings")));
+    }
+
+    public int getLatestRecordId() {
+        List<WebElement> allRows = webDriver.findElements(By.className("row"));
+        String id = allRows.get(allRows.size() - 2).getAttribute("id");
+        return Integer.parseInt(id);
+    }
+
+    public BasePage deleteBookingBasedOnId(int bookingId) {
+        webDriver.findElement(By.xpath("//*[contains(@onclick,'deleteBooking(" + bookingId + ")')]")).click();
+        return this;
     }
 
     private void waitIdleOnPageForSecond(int seconds) {

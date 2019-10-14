@@ -23,9 +23,9 @@ public class WebDriverConfig {
         String chromeDriverType;
 
         if (osName.toLowerCase().contains("windows")) {
-            chromeDriverType = "chromedriver.exe";
+            chromeDriverType = "src/test/resources/chromedriver.exe";
         } else {
-            chromeDriverType = "chromedriver";
+            chromeDriverType = "src/test/resources/chromedriver";
         }
         System.setProperty("webdriver.chrome.driver", chromeDriverType);
     }

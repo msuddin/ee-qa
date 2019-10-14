@@ -1,6 +1,9 @@
 Feature: Making a booking
 
+  Background: The booking site should be available
+    Given I am able to navigate to the site
 
+  @Smoke
   Scenario: Should be able to save a record
     When I am on the booking form and enter data
       | firstname | ee-qa-fname |
