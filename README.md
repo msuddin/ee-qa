@@ -49,7 +49,7 @@ To run the tests, from the root directory of this project run:
 - Have used the Page Object Pattern to isolate all page related methods
 - Have added tags to the RunAllTests class
 
-### If I have more time
+### If I had more time
 
 - My focus here was to get a working solution up and running as opposed to focusing on any libraries which would help overtime e.g. Spring
 - I would have added in configuration to run all the tests in headless mode

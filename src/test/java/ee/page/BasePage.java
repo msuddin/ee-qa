@@ -56,6 +56,7 @@ public class BasePage {
     }
 
     public Boolean searchRecords(List<String> dataFields) {
+        // TODO: This needs to be cleaned - removing unwanted row names for data comparison later
         List<String> testDataField = new ArrayList<>();
         testDataField.add(dataFields.get(1));
         testDataField.add(dataFields.get(3));
@@ -64,6 +65,7 @@ public class BasePage {
         testDataField.add(dataFields.get(9));
         testDataField.add(dataFields.get(11));
 
+        // TODO: Need to replace this hard wait
         this.waitIdleOnPageForSecond(5);
 
         List<WebElement> allRowData = webDriver.findElements(By.className("row"));
