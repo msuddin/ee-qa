@@ -48,6 +48,7 @@ To run the tests, from the root directory of this project run:
 - Have abstracted out WebDriver and used Singleton Pattern to ensure the driver can not be instantiated more than once
 - Have used the Page Object Pattern to isolate all page related methods
 - Have added tags to the RunAllTests class
+- Can look in the build/cucumber directory to see test reports
 
 ### If I had more time
 

@@ -9,8 +9,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features/",
-        glue = "ee.steps",
-        tags = "@Smoke"
+        glue = {"ee.steps"},
+        tags = {"@Smoke"},
+        plugin = {"pretty","html:build/cucumber"}
 )
 public class RunAllTests {
 

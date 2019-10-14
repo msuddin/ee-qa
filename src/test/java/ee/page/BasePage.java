@@ -2,6 +2,7 @@ package ee.page;
 
 import ee.driver.WebDriverConfig;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,7 @@ import java.util.List;
 public class BasePage {
 
     private WebDriver webDriver;
+    private int numberOfRowsOnPage;
 
     public BasePage() {
         webDriver = WebDriverConfig.getDriver();
@@ -51,22 +53,16 @@ public class BasePage {
     }
 
     public BasePage saveDate() {
+        numberOfRowsOnPage = this.getCurrentNumberOfRowsOnPaege();
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         webDriver.findElement(By.xpath("//*[contains(@value,'Save')]")).click();
         return this;
     }
 
     public Boolean searchRecords(List<String> dataFields) {
-        // TODO: This needs to be cleaned - removing unwanted row names for data comparison later
-        List<String> testDataField = new ArrayList<>();
-        testDataField.add(dataFields.get(1));
-        testDataField.add(dataFields.get(3));
-        testDataField.add(dataFields.get(5));
-        testDataField.add(dataFields.get(7));
-        testDataField.add(dataFields.get(9));
-        testDataField.add(dataFields.get(11));
+        List<String> testDataField = getExpectedStringList(dataFields);
 
-        // TODO: Need to replace this hard wait
-        this.waitIdleOnPageForSecond(5);
+        this.waitUntilRowsHaveBeenRefreshed();
 
         List<WebElement> allRowData = webDriver.findElements(By.className("row"));
         for (int i = 0; i < allRowData.size(); i++) {
@@ -82,6 +78,17 @@ public class BasePage {
         return false;
     }
 
+    private List<String> getExpectedStringList(List<String> dataFields) {
+        List<String> testDataField = new ArrayList<>();
+        testDataField.add(dataFields.get(1));
+        testDataField.add(dataFields.get(3));
+        testDataField.add(dataFields.get(5));
+        testDataField.add(dataFields.get(7));
+        testDataField.add(dataFields.get(9));
+        testDataField.add(dataFields.get(11));
+        return testDataField;
+    }
+
     public void bookingTableIsVisible() {
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("bookings")));
@@ -94,15 +101,26 @@ public class BasePage {
     }
 
     public BasePage deleteBookingBasedOnId(int bookingId) {
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         webDriver.findElement(By.xpath("//*[contains(@onclick,'deleteBooking(" + bookingId + ")')]")).click();
         return this;
     }
 
-    private void waitIdleOnPageForSecond(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (Exception e) {
-            System.out.println("Unable to wait on the page.");
+    private int getCurrentNumberOfRowsOnPaege() {
+        return webDriver.findElements(By.className("row")).size();
+    }
+
+    private Boolean waitUntilRowsHaveBeenRefreshed() {
+        for (int i = 0; i < 5; i++) {
+            try {
+                Thread.sleep(1000);
+                if (numberOfRowsOnPage < webDriver.findElements(By.className("row")).size()) {
+                    return true;
+                }
+            } catch (Exception e) {
+                System.out.println("Unable to wait on the page.");
+            }
         }
+        return false;
     }
 }
